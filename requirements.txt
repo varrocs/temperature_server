@@ -1,0 +1,2 @@
+pygal==1.7.0
+tornado==4.2
