@@ -10,7 +10,7 @@ class StreamHandler():
     def __init__(self, owner, stream, callback):
         self.owner = owner
         self.stream = stream
-        self.regexp=re.compile("Temp: ([0-9.]*); Hum: ([0-9.]*)")
+        self.regexp=re.compile("Temp: ([0-9.]*);Hum: ([0-9.]*)")
         self.callback=callback
 
     def _parse_data(self, data):
@@ -57,8 +57,16 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         result= datastore.last_n(1)[0]
         loader = tornado.template.Loader('static')
-        result = loader.load('index.html').generate(temperature=result['temperature'], humidity=result['humidity'])
+        result = loader.load('index.html').generate(
+            temperature=result['temperature'],
+            humidity=result['humidity'],
+            reportdate=result['date'])
         self.write(result)
+
+class GraphStaticFileHandler(tornado.web.StaticFileHandler):
+    def set_extra_headers(self, path):
+        # Disable cache
+        self.set_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
 
 def start_server(web_port, tcp_port, callback):
     server = TemperatureServer(callback)
@@ -69,7 +77,7 @@ def start_server(web_port, tcp_port, callback):
     application = tornado.web.Application([
         (r"/", IndexHandler),
         (r"/current", CurrentHandler),
-        (r"/graph/(.*)", tornado.web.StaticFileHandler, {'path': "graph"}),
+        (r"/graph/(.*)", GraphStaticFileHandler, {'path': "graph"}),
         (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': "static"}),
     ])
     print("WEB Listening on port {}".format(web_port))
