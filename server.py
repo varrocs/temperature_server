@@ -70,6 +70,7 @@ def start_server(web_port, tcp_port, callback):
         (r"/", IndexHandler),
         (r"/current", CurrentHandler),
         (r"/graph/(.*)", tornado.web.StaticFileHandler, {'path': "graph"}),
+        (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': "static"}),
     ])
     print("WEB Listening on port {}".format(web_port))
     application.listen(web_port)

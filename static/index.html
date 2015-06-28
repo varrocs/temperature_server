@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
     <title>Temperature</title>
+
 </head>
 <body>
 
-<div class="temperature">
-    <span>Temperature:</span><span>{{temperature}}</span>
-    <span>Humidity:</span><span>{{humidity}}</span>
-</div>
+    <div class="temperature">
+        <div>{{temperature}} °C</div>
+        <div>{{humidity}} %</div>
+    </div>
 
-<figure>
-      <embed type="image/svg+xml" src="/graph/graph.svg" />
-</figure>
-
+    <figure>
+          <embed type="image/svg+xml" src="/graph/graph.svg" />
+    </figure>
 
 </body>
 </html>

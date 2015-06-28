@@ -9,10 +9,11 @@ PATH_GRAPH = "graph/graph.svg"
 
 def on_data(data):
     print(data)
-    chart.update_chart(PATH_GRAPH)
     datastore.on_data(data)
 
 def main():
+    #datastore.do_test()
+    chart.update_chart(PATH_GRAPH)
     start_server(WEB_PORT, TCP_PORT, on_data)
 
 if __name__ == "__main__":

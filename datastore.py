@@ -10,7 +10,7 @@ def _check_db():
         conn = sqlite3.connect(DB)
         conn.execute("""CREATE TABLE data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            time DATETIME,
+            time TIMESTAMP,
             temperature FLOAT,
             humidity FLOAT
         )""")
@@ -28,8 +28,9 @@ def _save(t, h):
 
 def last_n(n):
     _check_db()
-    conn = sqlite3.connect(DB)
+    conn = sqlite3.connect(DB, detect_types=sqlite3.PARSE_DECLTYPES)
     result = [ {'date':row[1], 'temperature':row[2], 'humidity':row[3]} for row in conn.execute('SELECT * FROM data ORDER BY time DESC LIMIT ?', (n,) ) ]
+    print(result)
     conn.close()
     return result
 
