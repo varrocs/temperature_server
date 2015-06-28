@@ -11,7 +11,7 @@ def update_chart(path):
     temperatures = [ p['temperature'] for p in datapoints ]
     humidities = [ p['humidity'] for p in datapoints ]
 
-    chart = pygal.Line(fill=True, style=LightGreenStyle, legend_at_bottom=True)
+    chart = pygal.Line(fill=True, style=LightGreenStyle, legend_at_bottom=True, spacing=10, height=400)
     chart.value_formatter = lambda x: "%.0f" % x
     chart.x_labels = _create_labels(times)
     chart.add('°C', temperatures)
